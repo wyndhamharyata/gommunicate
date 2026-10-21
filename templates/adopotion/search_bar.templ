@@ -3,47 +3,47 @@ package adoption
 import "github.com/muhwyndhamhp/gotes-mx/modules/pet"
 
 templ searchBar(petTypes []pet.PetTypeSet) {
-    <form class="w-full lg:w-2/3 xl:w-1/2 m-auto flex flex-row">
-    @petToggle(petTypes)
-    <input 
-    class="w-full rounded-2xl border-transparent z-10 shadow-2xl outline outline-1 outline-slate-300 focus:border-transparent focus:outline-slate-500 text-lg px-6 py-2"
-        hx-get="/adoptions/list" 
-        hx-trigger="keyup changed delay:500ms, search" 
-        hx-target="#pets-parent" 
-        hx-swap="innerHTML" 
-        name="search"
-        hx-indicator="#pet-loading"
-        id="search"
-        type="text"
-        _="
+	<form class="w-full lg:w-2/3 xl:w-1/2 m-auto flex flex-row">
+		@petToggle(petTypes)
+		<input
+			class="w-full rounded-2xl border-transparent z-10 shadow-2xl outline outline-1 outline-slate-300 focus:border-transparent focus:outline-slate-500 text-lg px-6 py-2"
+			hx-get="/adoptions/list"
+			hx-trigger="keyup changed delay:500ms, search"
+			hx-target="#pets-parent"
+			hx-swap="innerHTML"
+			name="search"
+			hx-indicator="#pet-loading"
+			id="search"
+			type="text"
+			_="
         on htmx:configRequest 
             get the first <li.select/> in the closest parent <form/> 
         then 
             set pet to result@value 
         then 
             js(pet) event.detail.parameters['pet_type'] = pet"
-        />
-    </form>
+		/>
+	</form>
 }
 
 templ petToggle(petTypes []pet.PetTypeSet) {
-    for i, pet := range petTypes {
-        <li
-            if i == 0 {
-                class="select flex flex-row cursor-pointer translate-x-12 ps-6 pe-20 py-2 bg-blue-100 rounded-2xl border-transparent outline-1 outline-cyan-200" 
-            }
-            else {
-                class="hidden flex flex-row cursor-pointer translate-x-12 ps-6 pe-20 py-2 bg-blue-100 rounded-2xl border-transparent outline-1 outline-cyan-200"
-            } 
-            value={ string(pet.PetType) }
-            _={ toggleNext() }>
-            @petToggleItem(pet)
-        </li>
-    }
+	for i, pet := range petTypes {
+		<li
+			if i == 0 {
+				class="select flex flex-row cursor-pointer translate-x-12 ps-6 pe-20 py-2 bg-blue-100 rounded-2xl border-transparent outline-1 outline-cyan-200"
+			} else {
+				class="hidden flex flex-row cursor-pointer translate-x-12 ps-6 pe-20 py-2 bg-blue-100 rounded-2xl border-transparent outline-1 outline-cyan-200"
+			}
+			value={ string(pet.PetType) }
+			_={ toggleNext() }
+		>
+			@petToggleItem(pet)
+		</li>
+	}
 }
 
 func toggleNext() string {
-    return `
+	return `
     on click 
         toggle between .select and .hidden on me
     then
@@ -66,10 +66,10 @@ func toggleNext() string {
 }
 
 templ petToggleItem(pet pet.PetTypeSet) {
-    <img src={ pet.URL } class="m-auto w-6 h-6 me-2"/>
-    if string(pet.PetType) == "" {
-        <p class="text-lg mb-0.5">All</p>
-    } else {
-        <p class="text-lg mb-0.5">{ string(pet.PetType) }</p>
-    }
+	<img src={ pet.URL } class="m-auto w-6 h-6 me-2"/>
+	if string(pet.PetType) == "" {
+		<p class="text-lg mb-0.5">All</p>
+	} else {
+		<p class="text-lg mb-0.5">{ string(pet.PetType) }</p>
+	}
 }

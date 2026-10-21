@@ -1,18 +1,19 @@
 package base
 
 templ DocType() {
-    <!DOCTYPE html>
+	<!DOCTYPE html>
 }
+
 templ Head() {
-    <head>
-        <link rel="stylesheet" href="/dist/tailwind.css"/> 
-        <script src="/dist/htmx.min.js"></script>
-        <script src="https://unpkg.com/hyperscript.org@0.9.11"></script>
-    </head>
+	<head>
+		<link rel="stylesheet" href="/dist/tailwind.css"/>
+		<script src="/dist/htmx.min.js"></script>
+		<script src="https://unpkg.com/hyperscript.org@0.9.11"></script>
+	</head>
 }
 
 templ Body(component templ.Component) {
-    <body class="bg-white-50 px-6 w-full flex flex-col relative">
-        {! component}
-    </body>
+	<body class="bg-white-50 px-6 w-full flex flex-col relative">
+		@component
+	</body>
 }

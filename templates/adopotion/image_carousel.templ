@@ -1,46 +1,49 @@
 package adoption
 
-import
-(
-"fmt"
- "github.com/muhwyndhamhp/gotes-mx/modules/pet"
- )
+import (
+	"fmt"
+	"github.com/muhwyndhamhp/gotes-mx/modules/pet"
+)
 
 templ imageCarousel(images []pet.Image) {
-    <div class="w-full rounded-2xl" id="carousel-parent">
-        for index, image := range images {
-            <div 
-            if index == 0 {
-                class="block relative transition-opacity duration-1000 ease-in"
-            } else {
-                class="hidden transition-opacity duration-1000 ease-in"
-            }>
-                @carouselItem(image, index, len(images))
-            </div>
-        }
-    </div>
+	<div class="w-full rounded-2xl" id="carousel-parent">
+		for index, image := range images {
+			<div
+				if index == 0 {
+					class="block relative transition-opacity duration-1000 ease-in"
+				} else {
+					class="hidden transition-opacity duration-1000 ease-in"
+				}
+			>
+				@carouselItem(image, index, len(images))
+			</div>
+		}
+	</div>
 }
 
 templ carouselItem(image pet.Image, index, length int) {
-    <p class="text-white text-xs mx-2 my-3 absolute top-0">{ fmt.Sprintf("%d / %d", index + 1, length) }</p>
-
-    <img src={image.URL} class="w-full aspect-square object-cover top-0 rounded-2xl"></img>
-
-    if length > 1 {
-    <button class="cursor-pointer absolute top-1/2 w-auto 
+	<p class="text-white text-xs mx-2 my-3 absolute top-0">{ fmt.Sprintf("%d / %d", index + 1, length) }</p>
+	<img src={ image.URL } class="w-full aspect-square object-cover top-0 rounded-2xl"/>
+	if length > 1 {
+		<button
+			class="cursor-pointer absolute top-1/2 w-auto 
         -mt-6 p-4 text-white font-bold text-md ease-in bg-opacity-25
         duration-300 rounded-r-3xl select-none 
-        bg-gray-950 hover:bg-opacity-90" _={ goToPreviousItem() }>&#10094;</button>
-
-    <button class="cursor-pointer absolute top-1/2 w-auto 
+        bg-gray-950 hover:bg-opacity-90"
+			_={ goToPreviousItem() }
+		>&#10094;</button>
+		<button
+			class="cursor-pointer absolute top-1/2 w-auto 
         -mt-6 p-4 text-white font-bold text-md ease-in bg-opacity-25
         duration-300 rounded-l-3xl select-none 
-        bg-gray-950 hover:bg-opacity-90 right-0" _={ goToNextItem() }>&#10095;</button>
-    }
+        bg-gray-950 hover:bg-opacity-90 right-0"
+			_={ goToNextItem() }
+		>&#10095;</button>
+	}
 }
 
 func goToPreviousItem() string {
-    return `
+	return `
     on click 
         get the previous <div/>
     if 
@@ -53,7 +56,7 @@ func goToPreviousItem() string {
 }
 
 func goToNextItem() string {
-    return `
+	return `
     on click 
         get the next <div/>
     if 
